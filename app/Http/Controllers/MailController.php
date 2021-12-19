@@ -13,6 +13,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class MailController extends Controller
 {
     public function sendMail(Request $request){
+
+        //check if the request is json
+        if ($request->json()->count() == 0){
+            abort(422);
+        }
         // iterate for each mail request
         foreach ($request->json()->all() as $mailRequest){
             // validate request for required fields
@@ -47,9 +52,8 @@ class MailController extends Controller
 
             //dispatch job for later processing
             SendMail::dispatch($mail);
-
-            //send response
-            return response()->json(['success' => true]);
         }
+        //send response
+        return response()->json(['success' => true]);
     }
 }
