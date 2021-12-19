@@ -18,5 +18,5 @@ use App\Http\Controllers\MailController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('send', [MailController::class, 'sendMail'])->name('mail.send');
+Route::middleware('auth:api')->post('send', [MailController::class, 'sendMail'])->name('mail.send');
 
