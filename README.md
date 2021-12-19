@@ -46,6 +46,11 @@ php artisan queue:work
 ````
 ###Sending Mails
 You can send mails posting json to the /api/send API
+When running DB Seeders a user with api key is generated for easy testing.
+API KEY:
+````
+fNn653Yr0AxpZHtjS9heDAxVe113WseljyAnUPqgrP3BnEdoJuuA0u5sHqEvK7FrRTGdAO1pOs6wiOaU
+````
 Request Example:
 ````
 [
