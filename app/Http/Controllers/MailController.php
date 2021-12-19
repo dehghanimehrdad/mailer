@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MailResource;
 use App\Jobs\SendMail;
 use App\Models\Mail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +14,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MailController extends Controller
 {
+    /**
+     * Dispatches jobs to send mails
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return JsonResponse
+     */
     public function sendMail(Request $request){
 
         //check if the request is json
@@ -55,5 +63,16 @@ class MailController extends Controller
         }
         //send response
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * Lists sent mail
+     *
+     * @return JsonResponse
+     */
+    public function list()
+    {
+        $sentMails = Mail::whereNotNull('sent_at')->get();
+        return response()->json(MailResource::collection($sentMails));
     }
 }
